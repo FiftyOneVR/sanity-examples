@@ -1,0 +1,19 @@
+tasks:
+    redis-master:
+        single_instance: true
+        image: redis:latest
+        cmd: ["redis-server", "--save", "60", "1"]
+        persistent_storage:
+            id: d6035f76-4ffe-4a60-a512-4facc6a1f17f
+            directories:
+                - /data
+    redis-replica:
+        image:
+            dockerfile: Dockerfile.redis_replica
+    web:
+        image:
+            dockerfile: Dockerfile
+        expose_public:
+           container_port: 3000
+           public_port: 80
+           domain: guestbook-go.examples.sanityinfra.com
